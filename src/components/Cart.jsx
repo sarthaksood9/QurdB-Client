@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { MdOutlineDelete } from "react-icons/md";
+import { removeFromCart } from '../redux/cartSlice';
+import toast from 'react-hot-toast';
 const Cart = ({ isCart }) => {
 
 
     const cartItems = useSelector(state => state.cart.cart);
-    console.log(cartItems);
+    // console.log(cartItems);
 
     function trimTextToWordCount(text, wordCount) {
         const words = text.split(' ');
@@ -15,12 +17,20 @@ const Cart = ({ isCart }) => {
         return text;
     }
 
+    const dispatch = useDispatch();
+
+
+  const handleRemove = (productId) => {
+    toast.success("Items Removed From Cart")
+    dispatch(removeFromCart(productId));
+  };
+
 
 
     return (
         // <div>
         <div className={`z-30 xl:w-[35%]  h-[92vh] transition-all flex flex-col duration-350 bg-white shadow-2xl absolute ${isCart ? "right-0" : "right-[-120%] xl:right-[-35%]"} px-2 py-4 gap-3`}>
-            {cartItems && cartItems.map((i, x) => {
+            {cartItems.length!==0? cartItems.map((i, x) => {
 
                 return (
                     <div className='flex items-center justify-between px-5 py-5 border rounded-xl gap-1'>
@@ -38,17 +48,17 @@ const Cart = ({ isCart }) => {
                         </div>
                         <div className='flex items-center gap-5'>
                             <div className='flex gap-1 bg-slate-100 p-[0.15rem] rounded-sm'>
-                                <button className='bg-white rounded-sm px-1'>-</button>
+                                <button className='bg-white rounded-sm px-1' onClick={()=>{toast.error("Feature Comeing Soon..")}}>-</button>
                                 <div>{i.quantity}</div>
-                                <button className='bg-white rounded-sm px-1'>+</button>
+                                <button onClick={()=>{toast.error("Feature Comeing Soon..")}} className='bg-white rounded-sm px-1'>+</button>
                             </div>
-                            <div className='text-[1.6rem] text-red-500'>
+                            <div onClick={()=>{handleRemove(i._id)}} className='text-[1.6rem] text-red-500'>
                                 <MdOutlineDelete />
                             </div>
                         </div>
                     </div>
                 )
-            })}
+            }):<div className='flex justify-center items-center h-full'><span>No Items In cart..</span></div>}
 
             <div className="mt-2 justify-self-end bottom-3 absolute w-[95%] flex items-center justify-between">
               

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 
-import { addToCart } from '../redux/cartSlice';
+
+import { addToCart, setCart } from '../redux/cartSlice';
 import { useDispatch, useSelector } from "react-redux";
 import { HiMiniInbox } from "react-icons/hi2";
 
@@ -8,9 +9,10 @@ import { HiMiniInbox } from "react-icons/hi2";
 
 import axios from 'axios'
 import { fetchCartData } from '../redux/fatchCart';
-import { initializeCart } from '../redux/setCart';
+import { buildUpdatedCart, initializeCart } from '../redux/setCart';
 import { UserContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const Home = () => {
 
@@ -33,7 +35,7 @@ const Home = () => {
     }
 
 
-    
+
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -81,18 +83,51 @@ const Home = () => {
         fetchScProducts();
     }
 
+    const cartItems = useSelector(state => state.cart.cart);
 
-
-    const hendleAddToCart = (pro) => {
-        console.log(pro);
-        dispatch(addToCart(pro));
-    }
-
-    console.log(products)
-
-    const navigate=useNavigate();
 
     
+
+
+    useEffect(()=>{
+        const updateCart = async (userId) => {
+            const productIds = cartItems.map(cartItems => cartItems._id);
+            console.log(cartItems);
+            console.log(productIds);
+            axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/user/addtocart`, { userId, productIds })
+            .then((req,res)=>{
+                console.log(req.data);
+                console.log("edf");
+                // dispatch(setCart(cartItems));
+            })
+            .catch((e)=>{
+                console.log(e);
+            })
+            
+    
+        };
+        if(cartItems.length!==0){
+            updateCart(user.user._id);
+        }
+    },[cartItems])
+
+
+
+    const hendleAddToCart = async(pro) => {
+        toast.success("Added To Cart")
+
+        dispatch(addToCart(pro));
+        
+
+    }
+
+    console.log(user.user._id);
+
+
+
+    const navigate = useNavigate();
+
+
 
 
 
@@ -158,7 +193,7 @@ const Home = () => {
                     <div className="w-full  p-3 rounded-md grid relative sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-10">
                         <h1 className='text-[2.4rem] font-bold absolute top-[-60px]'>Products</h1>
                         {products.length !== 0 ? products.map((i, x) => {
-                            console.log(i.image.url);
+                           
                             return (
                                 <div onClick={() => { navigate(`/product/${i._id}`) }} className="group relative border border-muted rounded-lg overflow-hidden  xl:w-fit hover:scale-105 transition-all duration-500">
                                     <div href="#" prefetch={false}>
@@ -174,7 +209,7 @@ const Home = () => {
                                     <div className="p-4">
                                         <h3 className="font-medium text-lg">{i.name}</h3>
                                         <p className="text-muted-foreground text-sm">
-                                        {trimTextToWordCount(i.discription,8)}</p>
+                                            {trimTextToWordCount(i.discription, 8)}</p>
                                         <div className="mt-2 flex items-center justify-between " onClick={(e) => e.stopPropagation()}>
                                             <span className="font-medium text-primary">{`$ ${i.price}`}</span>
                                             <button
@@ -197,7 +232,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-                
+
         </div>
     )
 }

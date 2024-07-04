@@ -12,7 +12,9 @@ export function Logn({ setLogin }) {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [showPass, setShowPass] = useState(false);
+    const [showPass, setShowPass] = useState(true);
+
+    const [loading,setLoading]=useState(false)
 
    
 
@@ -21,10 +23,12 @@ export function Logn({ setLogin }) {
 
 
     const login=(email,password)=>{
+        
         axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/user/login`,{email,password})
         .then((req,res)=>{
             user.logIn(req.data.user);
             navigate("/");
+            setLoading(false)
             
         })
         .catch((e)=>{
@@ -130,7 +134,7 @@ export function Signup({ setLogin }) {
 
     const [password, setPassword] = useState("");
 
-    const [showPass, setShowPass] = useState(false);
+    const [showPass, setShowPass] = useState(true);
 
     useEffect(() => {
         function containsLowerCaseCharacter(inputString) {
