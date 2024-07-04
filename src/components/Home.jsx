@@ -34,6 +34,20 @@ const Home = () => {
         return text;
     }
 
+    const [selectedCategories, setSelectedCategories] = useState([]);
+
+    const handleCheckboxChange = (event) => {
+        const { name, checked } = event.target;
+        if (checked) {
+            setSelectedCategories((prev) => [...prev, name]);
+        } else {
+            setSelectedCategories((prev) => prev.filter((category) => category !== name));
+        }
+    };
+
+
+    console.log(selectedCategories);
+
 
 
 
@@ -70,19 +84,30 @@ const Home = () => {
 
     const hendleFilter = () => {
         const fetchScProducts = async () => {
+            const promises = selectedCategories.map((category) => {
+                return axios.get(`${process.env.REACT_APP_BASE_URL}/api/v1/admin/products`, {
+                    params: {
+                        'price[gte]': lowerLimit,
+                        'price[lte]': upperLimit,
+                        category: category.trim()
+                    }
+                });
+            });
 
-            let ss = category;
-            await axios.get(`${process.env.REACT_APP_BASE_URL}/api/v1/admin/products?price[gte]=${lowerLimit}&price[lte]=${upperLimit}`)
-                .then((req, res) => {
-                    setProducts(req.data.products);
+            Promise.all(promises)
+                .then((responses) => {
+                    const allProducts = responses.flatMap(response => response.data.products);
+                    setProducts(allProducts); // Assuming setProducts expects an array of products
                     initializeCart(user.user._id);
                 })
-                .catch((e) => {
-                    console.log(e);
-                })
-        };
+                .catch((error) => {
+                    console.error('Error fetching products by category:', error);
+                });
+        }
         fetchScProducts();
     }
+
+
 
     const cartItems = useSelector(state => state.cart.cart);
 
@@ -146,6 +171,7 @@ const Home = () => {
 
 
 
+
     return (
         <div className=' flex relative overflow-hidden'>
             <div className='flex flex-col px-5 py-10 gap-8 min-w-full'>
@@ -159,19 +185,33 @@ const Home = () => {
                     <div className='w-[20%] relative hidden border-[1px] p-2 xl:flex flex-col gap-5 rounded-sm h-fit'>
                         <h1 className='text-[2rem] font-semibold absolute top-[-50px]'>Filters</h1>
                         <div className='flex flex-col gap-3'>
-                            <h1 className='font-semibold text-[1.3rem]'>Category</h1>
-                            <div className='flex flex-col px-3'>
-                                <div className='flex items-center gap-4'>
-                                    <input type='checkbox' />
-                                    <label>Laptop</label>
-                                </div>
-                                <div className='flex items-center gap-4'>
-                                    <input type='checkbox' />
-                                    <label>Moblie</label>
-                                </div>
-                                <div className='flex items-center gap-4'>
-                                    <input type='checkbox' />
-                                    <label>accessories</label>
+                            <div className='flex flex-col gap-3'>
+                                <h1 className='font-semibold text-[1.3rem]'>Category</h1>
+                                <div className='flex flex-col px-3'>
+                                    <div className='flex items-center gap-4'>
+                                        <input
+                                            type='checkbox'
+                                            name='Laptop'
+                                            onChange={handleCheckboxChange}
+                                        />
+                                        <label>Laptops</label>
+                                    </div>
+                                    <div className='flex items-center gap-4'>
+                                        <input
+                                            type='checkbox'
+                                            name='Moblie'
+                                            onChange={handleCheckboxChange}
+                                        />
+                                        <label>Mobile</label>
+                                    </div>
+                                    <div className='flex items-center gap-4'>
+                                        <input
+                                            type='checkbox'
+                                            name='accessories'
+                                            onChange={handleCheckboxChange}
+                                        />
+                                        <label>Accessories</label>
+                                    </div>
                                 </div>
                             </div>
 
