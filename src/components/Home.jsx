@@ -67,6 +67,7 @@ const Home = () => {
         };
         fetchScProducts();
     }
+
     const hendleFilter = () => {
         const fetchScProducts = async () => {
 
@@ -86,46 +87,58 @@ const Home = () => {
     const cartItems = useSelector(state => state.cart.cart);
 
 
-    
 
 
-    useEffect(()=>{
+
+    useEffect(() => {
         const updateCart = async (userId) => {
             const productIds = cartItems.map(cartItems => cartItems._id);
             console.log(cartItems);
             console.log(productIds);
             axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/user/addtocart`, { userId, productIds })
-            .then((req,res)=>{
-                console.log(req.data);
-                console.log("edf");
-                // dispatch(setCart(cartItems));
-            })
-            .catch((e)=>{
-                console.log(e);
-            })
-            
-    
+                .then((req, res) => {
+                    console.log(req.data);
+                    console.log("edf");
+                    // dispatch(setCart(cartItems));
+                })
+                .catch((e) => {
+                    console.log(e);
+                })
+
+
         };
-        if(cartItems.length!==0){
+        if (cartItems.length !== 0) {
             updateCart(user.user._id);
         }
-    },[cartItems])
+    }, [cartItems])
 
 
 
-    const hendleAddToCart = async(pro) => {
+    const hendleAddToCart = async (pro) => {
         toast.success("Added To Cart")
 
         dispatch(addToCart(pro));
-        
+
 
     }
 
-    console.log(user.user._id);
+    const [filter, setFilter] = useState(false);
+    console.log(filter)
 
 
 
     const navigate = useNavigate();
+
+    const hendleFilterReset = async () => {
+        await axios.get(`${process.env.REACT_APP_BASE_URL}/api/v1/admin/products`)
+            .then((req, res) => {
+                setProducts(req.data.products);
+                initializeCart(user.user._id);
+            })
+            .catch((e) => {
+                console.log(e);
+            })
+    }
 
 
 
@@ -183,17 +196,23 @@ const Home = () => {
 
                             </div>
                         </div>
-                        <button
-                            onClick={() => { hendleFilter() }}
+                        {filter === true ? (<button
+                            onClick={() => { hendleFilterReset(); toast.success("Filter Applied"); setFilter(!filter) }}
                             className="bg-[#18181B] mt-5 w-full px-2 py-2 rounded-md text-white font-semibold hover:bg-primary/90"
                         >
-                            Apply
-                        </button>
+                            Reset Filter
+                        </button>) :
+                            (<button
+                                onClick={() => { hendleFilter(); toast.success("Filter Reset"); setFilter(!filter) }}
+                                className="bg-[#18181B] mt-5 w-full px-2 py-2 rounded-md text-white font-semibold hover:bg-primary/90"
+                            >
+                                Apply
+                            </button>)}
                     </div>
                     <div className="w-full  p-3 rounded-md grid relative sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-10">
                         <h1 className='text-[2.4rem] font-bold absolute top-[-60px]'>Products</h1>
                         {products.length !== 0 ? products.map((i, x) => {
-                           
+
                             return (
                                 <div onClick={() => { navigate(`/product/${i._id}`) }} className="group relative border border-muted rounded-lg overflow-hidden  xl:w-fit hover:scale-105 transition-all duration-500">
                                     <div href="#" prefetch={false}>
