@@ -2,8 +2,6 @@ import React, { useContext, useEffect, useState } from 'react'
 import { FaEye } from 'react-icons/fa6'
 import { BsFacebook } from 'react-icons/bs'
 import { FcGoogle } from 'react-icons/fc'
-// import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
-// import { auth, provider } from '../firebase'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../context/UserContext'
@@ -110,18 +108,21 @@ export function Signup({ setLogin }) {
     const [name, setName] = useState("");
 
 
-    // const [validations, setValidations] = useState({
-    //     uppercase: false,
-    //     lowcase: false,
-    //     special: false,
-    //     number: false,
-    //     length: false,
-    // });
+    const user=useContext(UserContext);
+    const navigate=useNavigate();
 
 
     const signUp = () => {
-        console.log("signup")
-
+        axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/user/registration`,{name,email,password})
+        .then((req,res)=>{
+            user.logIn(req.data.user);
+            navigate("/");
+            
+        })
+        .catch((e)=>{
+            toast.error('Invalid UserName Or Password')
+            console.log(e);
+        })
     }
 
   
