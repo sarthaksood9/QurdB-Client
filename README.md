@@ -1,70 +1,66 @@
-# Getting Started with Create React App
+# EcomProject
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
+EcomProject is a full-stack e-commerce application built with Node.js, Express, MongoDB, React, and Redux. The application allows users to browse and purchase products, manage their shopping cart, and track their orders.
 
-## Available Scripts
+## Functionality
 
-In the project directory, you can run:
+### User Management
+- User registration and login functionality
+- Authentication
 
-### `npm start`
+### Product Management
+- Product listing with filtering and sorting options
+- Product details page with product information
+- Product search functionality
+- Product categorization
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Shopping Cart
+- Add and remove products from cart
+- Update cart quantities
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
+### Order Management
+- Place orders with payment gateway integration (Stripe)
+- Order tracking and status updates
+- Order cancellation and refund functionality
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Admin Management
+- Product management (add, edit, delete products)
+- Order management (view, update, cancel orders)
+- User management (view, update, delete users)
+- Promo code management (add, edit, delete promo codes)
 
-### `npm run build`
+## Technical Details
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Backend
+- Built with Node.js and Express
+- Uses MongoDB as the database
+- Implements RESTful API endpoints for frontend communication
+- Uses JWT for user authentication and authorization
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Frontend
+- Built with React and Redux
+- Uses React Router for client-side routing
+- Implements state management using Redux
+- Uses CSS for styling and layout
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Setup and Run
 
-### `npm run eject`
+### Backend
+1. Clone the repository and navigate to the backend folder.
+2. Run `npm install` to install dependencies.
+3. Run `npm start` to start the server.
+4. The API will be available at [https://qurdb-server.onrender.com](https://qurdb-server.onrender.com).
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Frontend
+1. Navigate to the frontend folder.
+2. Run `npm install` to install dependencies.
+3. Run `npm start` to start the React application.
+4. The application will be available at [https://qurd-b-client.vercel.app/](https://qurd-b-client.vercel.app/).
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## License
+This project is licensed under the MIT License.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Contact
+If you have any questions or issues, please contact us at support@ecomproject.com.
