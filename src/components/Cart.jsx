@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MdOutlineDelete } from "react-icons/md";
 import { removeFromCart } from '../redux/cartSlice';
 import toast from 'react-hot-toast';
-const Cart = ({ isCart }) => {
+import { useNavigate } from 'react-router-dom';
+const Cart = ({ isCart,mod }) => {
 
 
     const cartItems = useSelector(state => state.cart.cart);
@@ -39,9 +40,11 @@ const Cart = ({ isCart }) => {
 
 
 
+
+
     return (
         // <div>
-        <div className={`z-30 xl:w-[35%]  h-[92vh] transition-all flex flex-col duration-350 bg-white shadow-2xl absolute ${isCart ? "right-0" : "right-[-120%] xl:right-[-35%]"} px-2 py-4 gap-3`}>
+        <div className={`z-30 xl:w-[35%]  h-[92vh] transition-all flex flex-col duration-350 bg-white shadow-2xl fixed mt-[8vh] ${isCart ? "right-0" : "right-[-120%] xl:right-[-35%]"} px-2 py-4 gap-3`}>
             {cartItems.length !== 0 ? cartItems.map((i, x) => {
 
                 return (
@@ -74,13 +77,13 @@ const Cart = ({ isCart }) => {
 
             <div className='absolute w-full bottom-20 px-4'>
                 <div className='flex w-full'>
-                    
+
                     <div>
                         SubTotal: {`$${sum}`}
                     </div>
                 </div>
                 <div className='flex justify-between '>
-                <div>Discount: 0.00$</div>
+                    <div>Discount: 0.00$</div>
                     <div className='ml-auto'>Total: {`$${sum}`}</div>
                 </div>
             </div>
@@ -88,6 +91,7 @@ const Cart = ({ isCart }) => {
             <div className="mt-2 justify-self-end bottom-3 absolute w-[95%] flex items-center justify-between">
 
                 <button
+                    onClick={() => { toast.error("Feature Comeing Soon.."); mod() }}
                     className="bg-[#18181B]  w-full bottom-6 px-2 py-4 rounded-full text-white font-semibold hover:bg-primary/90"
                 >
                     Check Out

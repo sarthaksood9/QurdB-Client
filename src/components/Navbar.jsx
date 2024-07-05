@@ -6,16 +6,21 @@ import { RxAvatar } from "react-icons/rx";
 import Cart from './Cart';
 import { UserContext } from '../context/UserContext';
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
     const cartItems = useSelector(state => state.cart.cart);
     const [isCart, setIsCart] = useState(false);
 
     const user=useContext(UserContext);
+    const closeCart=()=>{
+        setIsCart(false)
+    }
+    const navigate=useNavigate();
     return (
         <div>
-            <div className='h-[8vh] text-[white] w-full bg-[#18181B] flex justify-between items-center px-7'>
-                <div>
+            <div className='h-[8vh] cursor-pointer fixed z-40 text-[white] w-full bg-[#18181B] flex justify-between items-center px-7'>
+                <div onClick={()=>{navigate("/")}}>
                     <h1>E-Com</h1>
                 </div>
                 <div className='flex gap-10'>
@@ -29,7 +34,7 @@ const Navbar = () => {
                     </div>
                 </div>
             </div>
-            <Cart isCart={isCart} />
+            <Cart isCart={isCart} mod={closeCart} />
         </div>
 
     )

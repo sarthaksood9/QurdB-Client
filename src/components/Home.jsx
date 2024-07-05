@@ -191,7 +191,7 @@ const Home = () => {
 
 
     return (
-        <div className=' flex relative overflow-hidden'>
+        <div className=' flex relative overflow-hidden pt-[8vh]'>
             <div className='flex flex-col px-5 py-10 gap-8 min-w-full'>
                 <div className=' w-full flex justify-center'>
                     <div className='flex w-[80%] md:w-[50%]'>
