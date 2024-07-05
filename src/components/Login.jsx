@@ -129,7 +129,7 @@ export function Signup({ setLogin }) {
 
             })
             .catch((e) => {
-                toast.error('Invalid UserName Or Password')
+                toast.error('This Email Already Exists...')
                 console.log(e);
             })
     }

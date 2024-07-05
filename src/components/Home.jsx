@@ -19,13 +19,15 @@ const Home = () => {
 
     const dispatch = useDispatch();
     const [search, setSearch] = useState("");
-    const [category, setCategory] = useState("");
+    const [filter, setFilter] = useState(false);
     const [upperLimit, setUpperLimit] = useState(3000);
     const [lowerLimit, setLowerLimit] = useState(500);
 
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
 
     const [products, setProducts] = useState([]);
+
+
     const user = useContext(UserContext);
 
 
@@ -49,7 +51,6 @@ const Home = () => {
     };
 
 
-    console.log(selectedCategories);
 
 
 
@@ -67,6 +68,7 @@ const Home = () => {
                 .catch((e) => {
                     setLoading(false)
                     console.log(e);
+                    toast.error('Server Error..')
                 })
         };
         fetchProducts();
@@ -85,6 +87,7 @@ const Home = () => {
                 .catch((e) => {
                     setLoading(false)
                     console.log(e);
+                    toast.error('Server Error..')
                 })
         };
         fetchScProducts();
@@ -109,10 +112,12 @@ const Home = () => {
                     setProducts(allProducts); // Assuming setProducts expects an array of products
                     initializeCart(user.user._id);
                     setLoading(false)
+                    
                 })
                 .catch((error) => {
                     setLoading(false)
                     console.error('Error fetching products by category:', error);
+                    toast.error('Server Error..')
                 });
         }
         fetchScProducts();
@@ -128,14 +133,13 @@ const Home = () => {
 
     useEffect(() => {
         const updateCart = async (userId) => {
-            setLoading(true)
+            
             const productIds = cartItems.map(cartItems => cartItems._id);
             console.log(cartItems);
             console.log(productIds);
             axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/user/addtocart`, { userId, productIds })
                 .then((req, res) => {
                     console.log(req.data);
-                    setLoading(false)
                 })
                 .catch((e) => {
                     console.log(e);
@@ -158,8 +162,7 @@ const Home = () => {
 
     }
 
-    const [filter, setFilter] = useState(false);
-    console.log(filter)
+    
 
 
 
@@ -175,7 +178,8 @@ const Home = () => {
             })
             .catch((e) => {
                 console.log(e);
-                setLoading(false)
+                setLoading(false);
+                toast.error('Server Error..')
             })
     }
 
