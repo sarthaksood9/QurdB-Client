@@ -13,6 +13,7 @@ import { buildUpdatedCart, initializeCart } from '../redux/setCart';
 import { UserContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import Loading from './Loading';
 
 const Home = () => {
 
@@ -21,6 +22,8 @@ const Home = () => {
     const [category, setCategory] = useState("");
     const [upperLimit, setUpperLimit] = useState(3000);
     const [lowerLimit, setLowerLimit] = useState(500);
+
+    const [loading, setLoading] = useState(false)
 
     const [products, setProducts] = useState([]);
     const user = useContext(UserContext);
@@ -53,13 +56,16 @@ const Home = () => {
 
     useEffect(() => {
         const fetchProducts = async () => {
+            setLoading(true)
 
             await axios.get(`${process.env.REACT_APP_BASE_URL}/api/v1/admin/products`)
                 .then((req, res) => {
                     setProducts(req.data.products);
                     initializeCart(user.user._id);
+                    setLoading(false)
                 })
                 .catch((e) => {
+                    setLoading(false)
                     console.log(e);
                 })
         };
@@ -68,14 +74,16 @@ const Home = () => {
 
     const hendleSearch = () => {
         const fetchScProducts = async () => {
-
+            setLoading(true)
             let ss = search;
             await axios.get(`${process.env.REACT_APP_BASE_URL}/api/v1/admin/products?keyword=${ss.trim()}`)
                 .then((req, res) => {
                     setProducts(req.data.products);
                     initializeCart(user.user._id);
+                    setLoading(false)
                 })
                 .catch((e) => {
+                    setLoading(false)
                     console.log(e);
                 })
         };
@@ -84,6 +92,7 @@ const Home = () => {
 
     const hendleFilter = () => {
         const fetchScProducts = async () => {
+            setLoading(false)
             const promises = selectedCategories.map((category) => {
                 return axios.get(`${process.env.REACT_APP_BASE_URL}/api/v1/admin/products`, {
                     params: {
@@ -99,8 +108,10 @@ const Home = () => {
                     const allProducts = responses.flatMap(response => response.data.products);
                     setProducts(allProducts); // Assuming setProducts expects an array of products
                     initializeCart(user.user._id);
+                    setLoading(false)
                 })
                 .catch((error) => {
+                    setLoading(false)
                     console.error('Error fetching products by category:', error);
                 });
         }
@@ -117,14 +128,14 @@ const Home = () => {
 
     useEffect(() => {
         const updateCart = async (userId) => {
+            setLoading(true)
             const productIds = cartItems.map(cartItems => cartItems._id);
             console.log(cartItems);
             console.log(productIds);
             axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/user/addtocart`, { userId, productIds })
                 .then((req, res) => {
                     console.log(req.data);
-                    console.log("edf");
-                    // dispatch(setCart(cartItems));
+                    setLoading(false)
                 })
                 .catch((e) => {
                     console.log(e);
@@ -155,19 +166,22 @@ const Home = () => {
     const navigate = useNavigate();
 
     const hendleFilterReset = async () => {
+        setLoading(true)
         await axios.get(`${process.env.REACT_APP_BASE_URL}/api/v1/admin/products`)
             .then((req, res) => {
                 setProducts(req.data.products);
                 initializeCart(user.user._id);
+                setLoading(false)
             })
             .catch((e) => {
                 console.log(e);
+                setLoading(false)
             })
     }
 
 
 
-
+    
 
 
 
@@ -251,7 +265,8 @@ const Home = () => {
                     </div>
                     <div className="w-full  p-3 rounded-md grid relative sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-10">
                         <h1 className='text-[2.4rem] font-bold absolute top-[-60px]'>Products</h1>
-                        {products.length !== 0 ? products.map((i, x) => {
+                        {loading ? <div className='w-full flex justify-center items-center absolute h-full'><div className="animate-spin rounded-full border-4 border-[#736f6f] border-primary border-t-transparent h-8 w-8" />
+            <span className="text-[#625757] font-semibold ml-3">Loading...</span></div> :<>{products.length !== 0 ? products.map((i, x) => {
 
                             return (
                                 <div onClick={() => { navigate(`/product/${i._id}`) }} className="group relative border border-muted rounded-lg overflow-hidden  xl:w-fit hover:scale-105 transition-all duration-500">
@@ -287,7 +302,7 @@ const Home = () => {
                             <div className='flex justify-center items-center w-full absolute top-[40%] gap-5'>
                                 <span>No Product Found...!</span>
                                 <HiMiniInbox className='text-[4rem] text-gray-600' />
-                            </div>}
+                            </div>}</>}
                     </div>
                 </div>
             </div>
