@@ -114,7 +114,7 @@ export function Signup({ setLogin }) {
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
 
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
 
 
     const user = useContext(UserContext);
@@ -270,7 +270,7 @@ const Login = () => {
 
     return (
 
-        <div className='h-[100vh] w-full bg-white flex justify-center items-center absolute top-0'>
+        <div className='h-[100vh] w-full bg-white flex justify-center items-center absolute top-0 z-50'>
             {login ? (<Logn setLogin={setLogin} />) : (<Signup setLogin={setLogin} />)}
 
         </div>
