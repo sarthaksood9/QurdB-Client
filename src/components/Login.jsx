@@ -30,7 +30,8 @@ export function Logn({ setLogin }) {
             .then((req, res) => {
                 user.logIn(req.data.user);
                 navigate("/");
-                setLoading(false)
+                setLoading(false);
+                toast.success(`Welcome Back ${req.data.user.name}`);
 
             })
             .catch((e) => {
@@ -113,6 +114,7 @@ export function Signup({ setLogin }) {
 
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
+    const [password, setPassword] = useState("");
 
     const [loading, setLoading] = useState(false)
 
@@ -120,24 +122,33 @@ export function Signup({ setLogin }) {
     const user = useContext(UserContext);
     const navigate = useNavigate();
 
+    console.log(name);
 
-    const signUp = () => {
+
+
+
+    const signUp = (name,email,password) => {
         axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/user/registration`, { name, email, password })
             .then((req, res) => {
                 user.logIn(req.data.user);
+                console.log(req.data);
+                console.log("ho")
                 navigate("/");
+                setLoading(false);
+                toast.success(`Welcome ${req.data.user.name}`);
 
             })
             .catch((e) => {
                 toast.error('This Email Already Exists...')
                 console.log(e);
+                setLoading(false);
             })
     }
 
 
 
 
-    const [password, setPassword] = useState("");
+   
 
     const [showPass, setShowPass] = useState(true);
 
@@ -255,7 +266,7 @@ export function Signup({ setLogin }) {
                     </div>
                 </div>
                 <div>
-                    <button onClick={() => { signUp() }} class="w-full text-center py-[0.85rem] text-white font-[550] rounded-full bg-[#18181B] text-[22px] md:text-[20px] sm:text-[18px]">Sign Up</button>
+                    <button onClick={() => { signUp(name,email,password) }} class="w-full text-center py-[0.85rem] text-white font-[550] rounded-full bg-[#18181B] text-[22px] md:text-[20px] sm:text-[18px]">Sign Up</button>
                 </div>
             </div>}
         </>

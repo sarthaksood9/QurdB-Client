@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { addToCart } from '../redux/cartSlice';
+import toast from 'react-hot-toast';
 
 const Product = () => {
 
@@ -54,7 +55,7 @@ const Product = () => {
                 <div className="text-4xl font-bold">{`$${product?.price}.00`}</div>
                 <div>
                     <button
-                    onClick={()=>{hendleAddToCart(product)}}
+                    onClick={()=>{hendleAddToCart(product);toast.success("Added to cart")}}
                         className="bg-[#18181B]  w-full bottom-6 px-2 py-4 rounded-full text-white font-semibold hover:bg-primary/90"
                     >
                         Add To Cart

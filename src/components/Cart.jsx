@@ -65,7 +65,7 @@ const Cart = ({ isCart,mod }) => {
                             <div className='flex gap-1 bg-slate-100 p-[0.15rem] rounded-sm'>
                                 <button className='bg-white rounded-sm px-1' onClick={() => { toast.error("Feature Comeing Soon..") }}>-</button>
                                 <div>{i.quantity}</div>
-                                <button onClick={() => { toast.error("Feature Comeing Soon..") }} className='bg-white rounded-sm px-1'>+</button>
+                                <button onClick={() => { toast.error("Feature Coming Soon...") }} className='bg-white rounded-sm px-1'>+</button>
                             </div>
                             <div onClick={() => { handleRemove(i._id) }} className='text-[1.6rem] text-red-500'>
                                 <MdOutlineDelete />
@@ -91,7 +91,7 @@ const Cart = ({ isCart,mod }) => {
             <div className="mt-2 justify-self-end bottom-3 absolute w-[95%] flex items-center justify-between">
 
                 <button
-                    onClick={() => { toast.error("Feature Comeing Soon.."); mod() }}
+                    onClick={() => { toast.error("Feature Coming Soon..."); mod() }}
                     className="bg-[#18181B]  w-full bottom-6 px-2 py-4 rounded-full text-white font-semibold hover:bg-primary/90"
                 >
                     Check Out
