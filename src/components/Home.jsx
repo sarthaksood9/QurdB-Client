@@ -97,7 +97,7 @@ const Home = () => {
     // Responsive Filter :-
 
 
-    const [filterModel, setFilterModel] = useState(true);
+    const [filterModel, setFilterModel] = useState(false);
 
     const HandleCloseFilter = () => {
         setFilterModel(false);

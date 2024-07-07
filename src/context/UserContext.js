@@ -24,6 +24,7 @@ export const UserProvider = ({ children }) => {
     const logOut = () => {
         setUser(null);
         localStorage.removeItem('user');
+        localStorage.removeItem('cart');
     }
 
     return (
