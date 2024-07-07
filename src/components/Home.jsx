@@ -1,34 +1,33 @@
 import React, { useContext, useEffect, useState } from 'react'
-
-
-import { addToCart, setCart } from '../redux/cartSlice';
-import { useDispatch, useSelector } from "react-redux";
 import { HiMiniInbox } from "react-icons/hi2";
-
-
-
-import axios from 'axios'
-import { fetchCartData } from '../redux/fatchCart';
-import { buildUpdatedCart, initializeCart } from '../redux/setCart';
 import { UserContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { initializeCart } from '../redux/setCart';
+import { addToCart, setCart } from '../redux/cartSlice';
+import axios from 'axios'
 import toast from 'react-hot-toast';
-import Loading from './Loading';
+
 
 const Home = () => {
 
     const dispatch = useDispatch();
+    const user = useContext(UserContext);
+
+
+
+    const [loading, setLoading] = useState(false);
+    const [products, setProducts] = useState([]);
+
+
+    //  Search and filter useStates:
     const [search, setSearch] = useState("");
     const [filter, setFilter] = useState(false);
     const [upperLimit, setUpperLimit] = useState(3000);
     const [lowerLimit, setLowerLimit] = useState(500);
 
-    const [loading, setLoading] = useState(false);
-
-    const [products, setProducts] = useState([]);
 
 
-    const user = useContext(UserContext);
 
 
     function trimTextToWordCount(text, wordCount) {
@@ -112,7 +111,7 @@ const Home = () => {
                     setProducts(allProducts); // Assuming setProducts expects an array of products
                     initializeCart(user.user._id);
                     setLoading(false)
-                    
+
                 })
                 .catch((error) => {
                     setLoading(false)
@@ -133,10 +132,8 @@ const Home = () => {
 
     useEffect(() => {
         const updateCart = async (userId) => {
-            
+
             const productIds = cartItems.map(cartItems => cartItems._id);
-            console.log(cartItems);
-            console.log(productIds);
             axios.post(`${process.env.REACT_APP_BASE_URL}/api/v1/user/addtocart`, { userId, productIds })
                 .then((req, res) => {
                     console.log(req.data);
@@ -155,14 +152,22 @@ const Home = () => {
 
 
     const hendleAddToCart = async (pro) => {
-        toast.success("Added To Cart")
 
-        dispatch(addToCart(pro));
-
-
+        // const adtocart = (pro) => {
+            setLoading(true);
+            axios.post(`${process.env.REACT_APP_BASE_URL}/add`, { userId: user.user._id, productId: pro._id, quantity: pro.quantity })
+                .then((req, res) => {
+                    dispatch(addToCart(pro));
+                    setLoading(false);
+                    toast.success("Added To Cart")
+                })
+                .catch((e) => {
+                    console.log(e);
+                    setLoading(false);
+                })
     }
 
-    
+
 
 
 
@@ -185,7 +190,7 @@ const Home = () => {
 
 
 
-    
+
 
 
 
@@ -270,43 +275,43 @@ const Home = () => {
                     <div className="w-full  p-3 rounded-md grid relative sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-10">
                         <h1 className='text-[2.4rem] font-bold absolute top-[-60px]'>Products</h1>
                         {loading ? <div className='w-full flex justify-center items-center absolute h-full'><div className="animate-spin rounded-full border-4 border-[#736f6f] border-primary border-t-transparent h-8 w-8" />
-            <span className="text-[#625757] font-semibold ml-3">Loading...</span></div> :<>{products.length !== 0 ? products.map((i, x) => {
+                            <span className="text-[#625757] font-semibold ml-3">Loading...</span></div> : <>{products.length !== 0 ? products.map((i, x) => {
 
-                            return (
-                                <div onClick={() => { navigate(`/product/${i._id}`) }} className="group relative border border-muted rounded-lg overflow-hidden  xl:w-fit hover:scale-105 transition-all duration-500">
-                                    <div href="#" prefetch={false}>
-                                        <img
-                                            src={i.image[0].url}
-                                            alt='ji'
+                                return (
+                                    <div onClick={() => { navigate(`/product/${i._id}`) }} className="group relative border border-muted rounded-lg overflow-hidden  xl:w-fit hover:scale-105 transition-all duration-500">
+                                        <div href="#" prefetch={false}>
+                                            <img
+                                                src={i.image[0].url}
+                                                alt='ji'
 
-                                            width={300}
-                                            height={300}
-                                            className="w-full h-[300px] p-3 object-fit group-hover:opacity-80 transition-opacity"
-                                        />
-                                    </div>
-                                    <div className="p-4">
-                                        <h3 className="font-medium text-lg">{i.name}</h3>
-                                        <p className="text-muted-foreground text-sm">
-                                            {trimTextToWordCount(i.discription, 8)}</p>
-                                        <div className="mt-2 flex items-center justify-between " onClick={(e) => e.stopPropagation()}>
-                                            <span className="font-medium text-primary">{`$ ${i.price}`}</span>
-                                            <button
-                                                size="sm"
-                                                variant="outline"
-                                                onClick={() => hendleAddToCart(i)}
-                                                className="bg-[#18181B] px-2 py-2 rounded-md text-white font-semibold hover:bg-primary/90"
-                                            >
-                                                Add to Cart
-                                            </button>
+                                                width={300}
+                                                height={300}
+                                                className="w-full h-[300px] p-3 object-fit group-hover:opacity-80 transition-opacity"
+                                            />
+                                        </div>
+                                        <div className="p-4">
+                                            <h3 className="font-medium text-lg">{i.name}</h3>
+                                            <p className="text-muted-foreground text-sm">
+                                                {trimTextToWordCount(i.discription, 8)}</p>
+                                            <div className="mt-2 flex items-center justify-between " onClick={(e) => e.stopPropagation()}>
+                                                <span className="font-medium text-primary">{`$ ${i.price}`}</span>
+                                                <button
+                                                    size="sm"
+                                                    variant="outline"
+                                                    onClick={() => hendleAddToCart(i)}
+                                                    className="bg-[#18181B] px-2 py-2 rounded-md text-white font-semibold hover:bg-primary/90"
+                                                >
+                                                    Add to Cart
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            )
-                        }) :
-                            <div className='flex justify-center items-center w-full absolute top-[40%] gap-5'>
-                                <span>No Product Found...!</span>
-                                <HiMiniInbox className='text-[4rem] text-gray-600' />
-                            </div>}</>}
+                                )
+                            }) :
+                                <div className='flex justify-center items-center w-full absolute top-[40%] gap-5'>
+                                    <span>No Product Found...!</span>
+                                    <HiMiniInbox className='text-[4rem] text-gray-600' />
+                                </div>}</>}
                     </div>
                 </div>
             </div>

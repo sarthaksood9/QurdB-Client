@@ -1,14 +1,21 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { MdOutlineDelete } from "react-icons/md";
 import { removeFromCart } from '../redux/cartSlice';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-const Cart = ({ isCart,mod }) => {
+import axios from 'axios';
+import { UserContext } from '../context/UserContext';
+import { initializeCart } from '../redux/setCart';
+const Cart = ({ isCart, mod }) => {
 
+    const user = useContext(UserContext);
+
+    const [loading, setLoading] = useState(false);
 
     const cartItems = useSelector(state => state.cart.cart);
-    // console.log(cartItems);
+
+
 
     function trimTextToWordCount(text, wordCount) {
         const words = text.split(' ');
@@ -21,9 +28,24 @@ const Cart = ({ isCart,mod }) => {
     const dispatch = useDispatch();
 
 
-    const handleRemove = (productId) => {
-        toast.success("Items Removed From Cart")
-        dispatch(removeFromCart(productId));
+    const handleRemove = async (productId) => {
+        setLoading(true);
+        try {
+
+
+            const response = await axios.delete(`${process.env.REACT_APP_BASE_URL}/api/cart/remove`, {
+                data: {
+                    userId: user.user._id,
+                    productId: productId
+                }
+            });
+            toast.success("Item Removed From Cart");
+            dispatch(removeFromCart(productId));
+        } catch (error) {
+            console.error('Error removing item from cart:', error);
+            toast.error("Failed to remove item from cart");
+            setLoading(false);
+        }
     };
 
     const Total = cartItems.map((i, x) => {
@@ -36,7 +58,7 @@ const Cart = ({ isCart,mod }) => {
         return accumulator + currentValue;
     }, 0);
 
-    
+
 
 
 
@@ -44,11 +66,11 @@ const Cart = ({ isCart,mod }) => {
 
     return (
         // <div>
-        <div className={`z-30 xl:w-[35%]  h-[92vh] transition-all flex flex-col duration-350 bg-white shadow-2xl fixed mt-[8vh] ${isCart ? "right-0" : "right-[-120%] xl:right-[-35%]"} px-2 py-4 gap-3`}>
+        <div className={`z-30 xl:w-[35%] overflow-x-scroll  h-[92vh] transition-all flex flex-col duration-350 bg-white shadow-2xl fixed mt-[8vh] ${isCart ? "right-0" : "right-[-150%] xl:right-[-35%]"} px-2 py-4 gap-3`}>
             {cartItems.length !== 0 ? cartItems.map((i, x) => {
 
                 return (
-                    <div className='flex items-center justify-between px-5 py-5 border rounded-xl gap-1'>
+                    <div className={`flex items-center justify-between px-5 py-5 border rounded-xl gap-1 ${x==cartItems.length-1 ? "mb-36":"mb-0"}`}>
                         <div>
                             {`${x + 1}.`}
                         </div>
@@ -75,27 +97,29 @@ const Cart = ({ isCart,mod }) => {
                 )
             }) : <div className='flex justify-center items-center h-full'><span>No Items In cart..</span></div>}
 
-            <div className='absolute w-full bottom-20 px-4'>
-                <div className='flex w-full'>
+            <div className='relative w-full h-full bottom-0'>
+                <div className='absolute bg-white w-full bottom-20 px-4'>
+                    <div className='flex w-full'>
 
-                    <div>
-                        SubTotal: {`$${sum}`}
+                        <div>
+                            SubTotal: {`$${sum}`}
+                        </div>
+                    </div>
+                    <div className='flex justify-between '>
+                        <div>Discount: 0.00$</div>
+                        <div className='ml-auto'>Total: {`$${sum}`}</div>
                     </div>
                 </div>
-                <div className='flex justify-between '>
-                    <div>Discount: 0.00$</div>
-                    <div className='ml-auto'>Total: {`$${sum}`}</div>
+
+                <div className="mt-2 justify-self-end bottom-3 absolute w-[95%] flex items-center justify-between">
+
+                    <button
+                        onClick={() => { toast.error("Feature Coming Soon..."); mod() }}
+                        className="bg-[#18181B]  w-full bottom-6 px-2 py-4 rounded-full text-white font-semibold hover:bg-primary/90"
+                    >
+                        Check Out
+                    </button>
                 </div>
-            </div>
-
-            <div className="mt-2 justify-self-end bottom-3 absolute w-[95%] flex items-center justify-between">
-
-                <button
-                    onClick={() => { toast.error("Feature Coming Soon..."); mod() }}
-                    className="bg-[#18181B]  w-full bottom-6 px-2 py-4 rounded-full text-white font-semibold hover:bg-primary/90"
-                >
-                    Check Out
-                </button>
             </div>
 
         </div>
