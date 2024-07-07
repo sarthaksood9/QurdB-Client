@@ -4,8 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import axios from 'axios';
 import { initializeCart } from '../redux/setCart';
+import { RxCross2 } from "react-icons/rx";
 
-const Filter = ({ loading, setLoading, setProducts }) => {
+const Filter = ({ loading, setLoading, setProducts,mod,setFil }) => {
     const navigate = useNavigate();
 
     // Get user context
@@ -97,8 +98,9 @@ const Filter = ({ loading, setLoading, setProducts }) => {
     };
 
     return (
-        <div className='w-[20%] relative hidden border-[1px] p-2 xl:flex flex-col gap-5 rounded-sm h-fit'>
-            <h1 className='text-[2rem] font-semibold absolute top-[-50px]'>Filters</h1>
+        <div onClick={(e) => e.stopPropagation()}>
+            <h1 className='text-[2rem] font-semibold absolute hidden xl:block top-[-50px]'>Filters</h1>
+            <div className='absolute right-3 mt-1 cursor-pointer' onClick={()=>{mod()}}><RxCross2/></div>
             <div className='flex flex-col gap-3'>
                 <div className='flex flex-col gap-3'>
                     <h1 className='font-semibold text-[1.3rem]'>Category</h1>
@@ -151,14 +153,14 @@ const Filter = ({ loading, setLoading, setProducts }) => {
             </div>
             {filter === true ? (
                 <button
-                    onClick={() => { hendleFilterReset(); toast.success("Filter Reset"); setFilter(!filter) }}
+                    onClick={() => { hendleFilterReset(); toast.success("Filter Reset"); setFilter(!filter);mod() }}
                     className="bg-[#18181B] mt-5 w-full px-2 py-2 rounded-md text-white font-semibold hover:bg-primary/90"
                 >
                     Reset Filter
                 </button>
             ) : (
                 <button
-                    onClick={() => { hendleFilter(); toast.success("Filter Applied"); setFilter(!filter) }}
+                    onClick={() => { hendleFilter(); setFil(false); toast.success("Filter Applied"); setFilter(!filter);mod() }}
                     className="bg-[#18181B] mt-5 w-full px-2 py-2 rounded-md text-white font-semibold hover:bg-primary/90"
                 >
                     Apply
