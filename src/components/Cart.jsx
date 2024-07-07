@@ -66,7 +66,7 @@ const Cart = ({ isCart, mod }) => {
 
     return (
         // <div>
-        <div className={`z-30 xl:w-[35%] overflow-x-scroll  h-[92vh] transition-all flex flex-col duration-350 bg-white shadow-2xl fixed mt-[8vh] ${isCart ? "right-0" : "right-[-150%] xl:right-[-35%]"} px-2 py-4 gap-3`}>
+        <div className={`z-30 w-full md:w-[50%] xl:w-[35%] overflow-x-scroll  h-[92vh] transition-all flex flex-col duration-350 bg-white shadow-2xl fixed mt-[8vh] ${isCart ? "right-0" : "right-[-150%] xl:right-[-35%]"} px-2 py-4 gap-3`}>
             {cartItems.length !== 0 ? cartItems.map((i, x) => {
 
                 return (
