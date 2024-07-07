@@ -6,12 +6,14 @@ import { UserContext } from '../context/UserContext';
 import { addToCart } from '../redux/cartSlice';
 import toast from 'react-hot-toast';
 
-const ProductCard = ({i,setLoading}) => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const user = useContext(UserContext);
+const ProductCard = ({ i, setLoading }) => {
+    const navigate = useNavigate(); // Hook for navigation
 
+    const dispatch = useDispatch(); // Hook for dispatching actions
 
+    const user = useContext(UserContext); // Get user context
+
+    // Function to trim text to a specified word count
     function trimTextToWordCount(text, wordCount) {
         const words = text.split(' ');
         if (words.length > wordCount) {
@@ -20,6 +22,8 @@ const ProductCard = ({i,setLoading}) => {
         return text;
     }
 
+
+    // Handleing adding a product to the cart
 
     const hendleAddToCart = async (pro) => {
 
@@ -36,7 +40,7 @@ const ProductCard = ({i,setLoading}) => {
             })
     }
 
-    
+
     return (
         <div onClick={() => { navigate(`/product/${i._id}`) }} className="group relative border border-muted rounded-lg overflow-hidden  xl:w-fit hover:scale-105 transition-all duration-500">
             <div href="#" prefetch={false}>

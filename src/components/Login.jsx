@@ -6,7 +6,7 @@ import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../context/UserContext'
 import axios from 'axios'
-import { initializeCart } from '../redux/setCart'
+
 import Loading from './Loading'
 
 export function Logn({ setLogin }) {

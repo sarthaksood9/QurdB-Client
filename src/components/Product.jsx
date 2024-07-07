@@ -8,20 +8,21 @@ import { UserContext } from '../context/UserContext';
 import { initializeCart } from '../redux/setCart';
 
 const Product = () => {
-
-    const { productId } = useParams();
-
-    const [product, setProduct] = useState()
-
-    const dispatch = useDispatch();
-
-    const [loading, setLoading] = useState(false);
-
+    // Access user context
     const user = useContext(UserContext);
 
+    // Get productId from the URL parameters
+    const { productId } = useParams();
+
+    // States to hold product details and to handle loading indicator
+    const [product, setProduct] = useState()
+    const [loading, setLoading] = useState(false);
+
+    // Hook to dispatch actions to Redux store
+    const dispatch = useDispatch();
 
 
-
+    // Fetch product details on component mount
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_BASE_URL}/api/v1/admin/productDetail/${productId}`)
             .then((req, res) => {
@@ -35,11 +36,13 @@ const Product = () => {
 
 
     }, [])
+
+    // Handle adding product to cart
     const hendleAddToCart = (pro) => {
         setLoading(true);
         axios.post(`${process.env.REACT_APP_BASE_URL}/add`, { userId: user.user._id, productId: pro._id, quantity: pro.quantity })
             .then((req, res) => {
-        
+
                 dispatch(addToCart(pro));
                 setLoading(false);
                 toast.success("Added To Cart")

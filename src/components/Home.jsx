@@ -10,16 +10,19 @@ import ProductCard from './ProductCard';
 
 
 const Home = () => {
+    // Context and Redux hooks to get user and cart information
     
     const user = useContext(UserContext);
     const cartItems = useSelector(state => state.cart.cart);
-    
-    
-    
+
+    // State hooks for loading, products, and search input
+
     const [loading, setLoading] = useState(false);
     const [products, setProducts] = useState([]);
     const [search, setSearch] = useState("");
 
+
+    // Fetch products when the component mounts
 
 
 
@@ -43,6 +46,7 @@ const Home = () => {
     }, [])
 
 
+    // Handle search functionality
 
     const hendleSearch = () => {
         const fetchScProducts = async () => {
@@ -63,13 +67,7 @@ const Home = () => {
         fetchScProducts();
     }
 
-    
-
-
-
-
-
-
+    // Update cart items when cartItems state changes
 
 
     useEffect(() => {
@@ -93,10 +91,6 @@ const Home = () => {
 
 
 
-  
-
-
-
     return (
         <div className=' flex relative overflow-hidden pt-[8vh]'>
             <div className='flex flex-col px-5 py-10 gap-8 min-w-full'>
@@ -107,7 +101,7 @@ const Home = () => {
                     </div>
                 </div>
                 <div className='flex gap-10 pt-10 justify-center px-5'>
-                    <Filter loading={loading} setLoading={setLoading} setProducts={setProducts}/>
+                    <Filter loading={loading} setLoading={setLoading} setProducts={setProducts} />
                     <div className="w-full  p-3 rounded-md grid relative sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-10">
                         <h1 className='text-[2.4rem] font-bold absolute top-[-60px]'>Products</h1>
                         {loading ? <div className='w-full flex justify-center items-center absolute h-full'><div className="animate-spin rounded-full border-4 border-[#736f6f] border-primary border-t-transparent h-8 w-8" />

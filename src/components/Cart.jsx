@@ -1,12 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { MdOutlineDelete } from "react-icons/md";
 import { removeFromCart } from '../redux/cartSlice';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
-import { initializeCart } from '../redux/setCart';
+
 const Cart = ({ isCart, mod }) => {
 
     const user = useContext(UserContext);
@@ -15,7 +14,7 @@ const Cart = ({ isCart, mod }) => {
 
     const cartItems = useSelector(state => state.cart.cart);
 
-
+    // Function to trim text to a specified word count
 
     function trimTextToWordCount(text, wordCount) {
         const words = text.split(' ');
@@ -27,7 +26,7 @@ const Cart = ({ isCart, mod }) => {
 
     const dispatch = useDispatch();
 
-
+    // Handling removing an item from the cart
     const handleRemove = async (productId) => {
         setLoading(true);
         try {
@@ -48,10 +47,14 @@ const Cart = ({ isCart, mod }) => {
         }
     };
 
+
+
+    // Calculate total price of items in the cart
+
+
     const Total = cartItems.map((i, x) => {
         return (i.price)
     })
-
 
 
     let sum = Total.reduce((accumulator, currentValue) => {
@@ -70,7 +73,7 @@ const Cart = ({ isCart, mod }) => {
             {cartItems.length !== 0 ? cartItems.map((i, x) => {
 
                 return (
-                    <div className={`flex items-center justify-between px-5 py-5 border rounded-xl gap-1 ${x==cartItems.length-1 ? "mb-36":"mb-0"}`}>
+                    <div className={`flex items-center justify-between px-5 py-5 border rounded-xl gap-1 ${x == cartItems.length - 1 ? "mb-36" : "mb-0"}`}>
                         <div>
                             {`${x + 1}.`}
                         </div>

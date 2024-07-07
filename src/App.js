@@ -11,18 +11,24 @@ import Navbar from './components/Navbar';
 
 
 function App() {
+  // Get the user context to determine the user's login status and role
   const user = useContext(UserContext);
+
+
   return (
+    // Wrap the application with the Redux provider to enable Redux state management
     <Provider store={store}>
       <BrowserRouter>
+
         <Navbar />
         <Routes>
+          {/* Check if the user is logged in */}
           {user.user ? <Route path='/*' element={user.user.post === "user" ? <AdminRoutes /> : <ProductRoutees />} /> : <Route path='/' element={<Login />} />}
+
         </Routes>
+
       </BrowserRouter>
-      {/* <Login /> */}
-
-
+      {/* Display toast notifications */}
       <Toaster />
     </Provider>
   );
