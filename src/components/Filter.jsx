@@ -100,7 +100,7 @@ const Filter = ({ loading, setLoading, setProducts,mod,setFil }) => {
     return (
         <div onClick={(e) => e.stopPropagation()}>
             <h1 className='text-[2rem] font-semibold absolute hidden xl:block top-[-50px]'>Filters</h1>
-            <div className='absolute right-3 mt-1 cursor-pointer xl:hidden' onClick={()=>{mod()}}><RxCross2/></div>
+            <div className='absolute right-3 mt-1 cursor-pointer' onClick={()=>{mod()}}><RxCross2/></div>
             <div className='flex flex-col gap-3'>
                 <div className='flex flex-col gap-3'>
                     <h1 className='font-semibold text-[1.3rem]'>Category</h1>

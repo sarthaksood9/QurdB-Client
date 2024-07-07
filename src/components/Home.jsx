@@ -120,6 +120,7 @@ const Home = () => {
                 toast.error('Server Error..');
             });
     };
+    
 
  
 
@@ -135,7 +136,7 @@ const Home = () => {
                     </div>
                     <div className='flex gap-10 pt-10 justify-center px-5'>
                         <div className='w-[20%] bg-white relative hidden border-[1px] p-2 xl:flex flex-col gap-5 rounded-sm h-fit'>
-                            <Filter loading={loading} setLoading={setLoading} setProducts={setProducts} />
+                            <Filter mod={HandleCloseFilter} fil={fil} setFil={setFil} loading={loading} setLoading={setLoading} setProducts={setProducts} />
                         </div>
 
                         <div className="w-full  p-3 rounded-md grid relative sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-10">
@@ -168,7 +169,7 @@ const Home = () => {
                     >
                         <div className='w-[80%] md:w-[30%] bg-white relative  border-[1px] p-2 flex flex-col gap-5 rounded-sm h-fit'>
 
-                            <Filter mod={HandleCloseFilter} setFil={setFil} loading={loading} setLoading={setLoading} setProducts={setProducts} />
+                            <Filter mod={HandleCloseFilter} fil={fil} setFil={setFil} loading={loading} setLoading={setLoading} setProducts={setProducts} />
                         </div>
                         <style>
                             {`body{ overflow:hidden; }`}
