@@ -87,16 +87,16 @@ export function Logn({ setLogin }) {
                     <div class="h-[1px] bg-slate-300 w-full"></div>
                 </div>
                 <div class="flex flex-col gap-3">
-                    <div class="flex w-full py-[0.85rem] text-white font-[500] rounded-full bg-[#1877f2] text-[20px] md:text-[18px] sm:text-[16px] justify-center items-center gap-3">
+                    <div onClick={() => { toast.error("Feature Comeing Soon..") }} class="flex w-full py-[0.85rem] text-white font-[500] rounded-full bg-[#1877f2] text-[20px] md:text-[18px] sm:text-[16px] justify-center items-center gap-3">
                         <BsFacebook />
                         <button>Continue with Facebook</button>
                     </div>
-                    <div class="flex w-full py-[0.85rem] border-[1px] border-slate-300 font-[500] rounded-full text-[20px] md:text-[18px] sm:text-[16px] justify-center items-center gap-3">
+                    <div onClick={() => { toast.error("Feature Comeing Soon..") }} class="flex w-full py-[0.85rem] border-[1px] border-slate-300 font-[500] rounded-full text-[20px] md:text-[18px] sm:text-[16px] justify-center items-center gap-3">
                         <FcGoogle />
                         <button>Continue with Google</button>
                     </div>
                 </div>
-                <div class="mt-2">
+                <div onClick={() => { toast.error("Feature Comeing Soon..") }} class="mt-2">
                     <p>Forgot Password?</p>
                 </div>
             </div>}
@@ -235,7 +235,7 @@ export function Signup({ setLogin }) {
                                 <label for="name" class="text-[19px] font-semibold md:text-[17px] sm:text-[15px]">Name</label>
                             </div>
                         </div>
-                        <input id="name" value={name} onChange={(e) => { setName(e.target.value) }} placeholder="Email.." class="px-2 border-[1px] border-slate-300 rounded-lg outline-none py-3 text-[18px] md:text-[16px] sm:text-[14px]" />
+                        <input id="name" value={name} onChange={(e) => { setName(e.target.value) }} placeholder="Name.." class="px-2 border-[1px] border-slate-300 rounded-lg outline-none py-3 text-[18px] md:text-[16px] sm:text-[14px]" />
                     </div>
                     <div class="flex flex-col w-full gap-2">
                         <div class="flex justify-between w-full">

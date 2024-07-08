@@ -13,6 +13,7 @@ import Navbar from './components/Navbar';
 function App() {
   // Get the user context to determine the user's login status and role
   const user = useContext(UserContext);
+  console.log(user);
 
 
   return (
@@ -23,7 +24,7 @@ function App() {
         <Navbar />
         <Routes>
           {/* Check if the user is logged in */}
-          {user.user ? <Route path='/*' element={user.user.post === "user" ? <AdminRoutes /> : <ProductRoutees />} /> : <Route path='/' element={<Login />} />}
+          {user.user ? <Route path='/*' element={user.user.role === "admin" ? <AdminRoutes /> : <ProductRoutees />} /> : <Route path='/' element={<Login />} />}
 
         </Routes>
 

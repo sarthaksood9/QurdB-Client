@@ -30,10 +30,10 @@ const Navbar = () => {
                     <h1>E-Com</h1>
                 </div>
                 <div className='flex gap-10'>
-                    <div onClick={() => { setIsCart(!isCart) }} className=' relative w-fit'>
+                   { user.user?.role === "user" && <div onClick={() => { setIsCart(!isCart) }} className=' relative w-fit'>
                         <IoMdCart className='text-[1.5rem]' />
                         <div className=' absolute bottom-[-1px] px-1 right-[-10px] rounded-full bg-white text-black text-center text-[0.7rem]'>{cartItems.length}</div>
-                    </div>
+                    </div>}
                     <div onClick={() => { user.logOut(); setIsCart(false) }} className=' profile hover:after:flex  w-fit relative transition-all duration-500    after:hidden after:content-["LogOut"] after:mt-1 after:absolute after:left-[-100%] after:bg-[white] after:text-[black] after:shadow-[rgba(0,0,0,0.35)_0px_5px_15px] after:px-2.5 py-[5px] after:rounded-[10px]'>
                         <RxAvatar className='text-[1.5rem]' />
                         {/* <div className=' absolute bottom-[-10px] px-1 right-[-10px] rounded-full bg-white text-black text-center text-[0.7rem]'>{cartItems.length}</div> */}
