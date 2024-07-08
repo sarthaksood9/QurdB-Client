@@ -282,6 +282,13 @@ const Login = () => {
     return (
 
         <div className='h-[100vh] w-full bg-white flex justify-center items-center absolute top-0 z-50'>
+            <div className='hidden md:flex flex-col w-[300px] px-5 py-3 bg-white shadow-xl rounded-lg absolute top-10 left-5'>
+                <div className='flex justify-center mb-3'>
+                    <h1 className='text-[1.4rem] font-semibold'>Admin Credentials:-</h1>
+                </div>
+                <h1>Username: <span className='text-blue-500'>admin</span></h1>
+                <h1>Password: <span className='text-blue-500'>admin</span></h1>
+            </div>
             {login ? (<Logn setLogin={setLogin} />) : (<Signup setLogin={setLogin} />)}
 
         </div>
