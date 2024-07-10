@@ -226,7 +226,7 @@ export function EditProd({ pro, mod }) {
                                 htmlFor="message"
                                 className="block text-gray-700 text-sm font-bold mb-2"
                             >
-                                Deadline
+                                Stock
                             </label>
                             <input
                                 type="number"
@@ -447,7 +447,7 @@ export function AddProd({ mod }) {
                                 htmlFor="message"
                                 className="block text-gray-700 text-sm font-bold mb-2"
                             >
-                                Deadline
+                                Stock
                             </label>
                             <input
                                 type="number"
