@@ -17,10 +17,8 @@ const ProductRoutees = ({setSerch,serch}) => {
             {/* <Navbar /> */}
             
             <Route path='/' element={<NewHome />}/>
-            <Route path='/product/:productId' element={<Product />}/>
             <Route path='/prod/:productId' element={<NewProd />}/>
             <Route path='/shop' element={<Shop setSerch={setSerch} serch={serch} />}/>
-            <Route path='/lo' element={<Rejistration />}/>
             <Route path='/order' element={<Orders />}/>
             
         </Routes>

@@ -229,7 +229,7 @@ const Shop = ({ serch, setSerch }) => {
                 {/* {!fil?<FiFilter className='absolute right-5 text-[1.3rem] text-gray-500 bottom-4' /> :<MdOutlineFilterAltOff className='absolute right-5 text-[1.3rem] text-gray-500 bottom-4' /> } */}
             </div>
 
-            <div className='flex flex-wrap justify-center md:justify-between gap-5'>
+            <div className='flex flex-wrap justify-center md:justify-between gap-5 pb-10'>
                 {loading ?
                     <div className="text-[#625757] h-[30vh] w-full flex items-center justify-center font-semibold ml-3"><Loading /></div> : <>{products.length !== 0 ? products.map((i, x) => {
 
