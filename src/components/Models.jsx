@@ -433,6 +433,7 @@ export function AddProd({ mod }) {
                                 className=" text-[0.9rem] h-[3rem] w-full  resize-none border border-gray-300 rounded-md px-4 py-2 block focus:outline-none focus:ring-[#001063] focus:border-[#001063] "
                             >
                                 <option value="Moblie">Mobile</option>
+                                <option value="Living Room">Living Room</option>
                                 <option value="Laptop">Laptop</option>
                                 <option value="accessories">Accessories</option>
 
@@ -500,7 +501,7 @@ export function AddProd({ mod }) {
                         onClick={() => {
                             mod();
                         }}
-                        className="hover:bg-[#001063] hover:text-white border-[1px] transition-all transition-1 border-[#001063] px-2 py-1 md:px-3 md:py-3 flex justify-center items-center text-[#001063] gap-[6px] rounded-xl  text-[12px]"
+                        className="hover:bg-[#0c0d10] hover:text-white border-[1px] transition-all transition-1 border-[#001063] px-2 py-1 md:px-3 md:py-3 flex justify-center items-center text-[#001063] gap-[6px] rounded-xl  text-[12px]"
                     >
                         <MdOutlineCancel size={20} /> Discard
                     </button>

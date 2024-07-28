@@ -3,11 +3,12 @@ import { FaEye } from 'react-icons/fa6'
 import { BsFacebook } from 'react-icons/bs'
 import { FcGoogle } from 'react-icons/fc'
 import toast from 'react-hot-toast'
-import { useNavigate } from 'react-router-dom'
+import { json, useNavigate } from 'react-router-dom'
 import { UserContext } from '../context/UserContext'
 import axios from 'axios'
 
 import Loading from './Loading'
+import Cookies from 'js-cookie'
 
 export function Logn({ setLogin }) {
 

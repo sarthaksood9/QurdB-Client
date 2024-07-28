@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import { UserContext } from './context/UserContext';
@@ -8,12 +8,17 @@ import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
 import ProductRoutees from './Routes/ProductRoutees';
 import AdminRoutes from './Routes/AdminRoutes';
 import Navbar from './components/Navbar';
+import NewNav from './NewComponents/NewNav';
+import Upperfooter from './NewComponents/Upperfooter';
+import Footer from './NewComponents/Footer';
+import Rejistration from './NewComponents/Rejistration';
 
 
 function App() {
   // Get the user context to determine the user's login status and role
   const user = useContext(UserContext);
-  console.log(user);
+
+  const [serch,setSerch]=useState(false);
 
 
   return (
@@ -21,12 +26,14 @@ function App() {
     <Provider store={store}>
       <BrowserRouter>
 
-        <Navbar />
+        <NewNav serch={serch} setSerch={setSerch} />
         <Routes>
           {/* Check if the user is logged in */}
-          {user.user ? <Route path='/*' element={user.user.role === "admin" ? <AdminRoutes /> : <ProductRoutees />} /> : <Route path='/' element={<Login />} />}
+          {user.user ? <Route path='/*' element={user?.user?.role === "admin" ? <AdminRoutes /> : <ProductRoutees serch={serch} setSerch={setSerch}  />} /> : <Route path='/' element={<Rejistration />} />}
 
         </Routes>
+        {user?.user?.role!=="admin" ? <Upperfooter/>:<></>}
+        {user?.user?.role!=="admin" ? <Footer/>:<></>}
 
       </BrowserRouter>
       {/* Display toast notifications */}

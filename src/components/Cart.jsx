@@ -5,6 +5,7 @@ import { removeFromCart } from '../redux/cartSlice';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = ({ isCart, mod }) => {
 
@@ -13,6 +14,7 @@ const Cart = ({ isCart, mod }) => {
     const [loading, setLoading] = useState(false);
 
     const cartItems = useSelector(state => state.cart.cart);
+    console.log(cartItems);
 
     // Function to trim text to a specified word count
 
@@ -62,6 +64,8 @@ const Cart = ({ isCart, mod }) => {
     }, 0);
 
 
+    const navigate=useNavigate();
+
 
 
 
@@ -69,7 +73,7 @@ const Cart = ({ isCart, mod }) => {
 
     return (
         // <div>
-        <div className={`z-30 w-full md:w-[50%] xl:w-[35%] overflow-x-scroll  h-[92vh] transition-all flex flex-col duration-350 bg-white shadow-2xl fixed mt-[8vh] ${isCart ? "right-0" : "right-[-150%] xl:right-[-35%]"} px-2 py-4 gap-3`}>
+        <div className={`z-30 w-full md:w-[50%] xl:w-[35%] overflow-x-scroll  h-[92vh] transition-all flex flex-col duration-350 bg-white shadow-2xl fixed mt-16 ${isCart ? "right-0" : "right-[-150%] xl:right-[-35%]"} px-2 py-4 gap-3`}>
             {cartItems.length !== 0 ? cartItems.map((i, x) => {
 
                 return (
@@ -117,7 +121,7 @@ const Cart = ({ isCart, mod }) => {
                 <div className="mt-2 justify-self-end bottom-3 absolute w-[95%] flex items-center justify-between">
 
                     <button
-                        onClick={() => { toast.error("Feature Coming Soon..."); mod() }}
+                        onClick={() => { navigate("/order"); mod() }}
                         className="bg-[#18181B]  w-full bottom-6 px-2 py-4 rounded-full text-white font-semibold hover:bg-primary/90"
                     >
                         Check Out
